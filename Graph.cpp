@@ -6,7 +6,9 @@
 #include <iostream>
 #include<iomanip>
 #include<memory>
+#include <vector>
 #include "Graph.h"
+
 #define N 6
 using namespace std;
 
@@ -51,23 +53,37 @@ int **createMatrix() {
 
 void initializeAdjacencyGraph(int ** adjacencyGraph){ //for tests
     adjacencyGraph[0][1] = 14;//A-B
+    adjacencyGraph[1][0] = 14;//B-A
     adjacencyGraph[0][2] = 17;// A-C
-    adjacencyGraph[1][2] = 2; //C-B
-    adjacencyGraph[0][3] = 8; // B-D
     adjacencyGraph[2][0] = 17; //C-A
+    adjacencyGraph[1][2] = 2; //C-B
+    adjacencyGraph[2][1] = 2; //B-C
+    adjacencyGraph[0][3] = 8; // B-D
+    adjacencyGraph[3][0] = 8; // D-B
     adjacencyGraph[3][2] = 31; //D-C
+    adjacencyGraph[2][3] = 31; //C-D
 }
 
 void Graph::showAdjacencyGraph()
 {
     cout << setw(SETWVALUE);
-    for(int j = 0; j<N; j++)
-    {
-        for(int i = 0; i<N; i++)
-        {
+    for(int j = 0; j<N; j++) {
+        for(int i = 0; i<N; i++) {
             cout << adjacencyGraph[i][j]<<setw(SETWVALUE);
         }
         cout << endl;
     }
     cout << endl;
+}
+
+vector<int> Graph::getConnections(Node currentPosition){
+    vector<int> connections;
+    //cout<< "curr pos " << currentPosition.number<<endl;
+    int x = currentPosition.number;
+
+    for(int i =0; i<N; i++)
+        if(adjacencyGraph[x][i] > 1)
+            connections.push_back(i);
+
+    return connections;
 }

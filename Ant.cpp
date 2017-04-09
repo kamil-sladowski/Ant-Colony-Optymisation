@@ -9,29 +9,33 @@
 #include <cstring>
 #include <vector>
 #include<memory>
+#include <iterator>
 #include "Ant.h"
 #define N 6
 
 using namespace std;
 
-Ant::Ant(int max, std::string start){
+Ant::Ant(int max, int start, shared_ptr<Graph> ptr){
     maxTime = max;
     time = 0;
-    currentPosition = Node(start); //new
+    currentPosition = Node(start);
     //visited = make_unique<bool []>(N);
-
 
     for(int i =0; i<N;i++) {
         visited[i] = false;
     }
-
     visited[0] = true;
+
+    ptr_to_graph=ptr;
+
 }
 
 Ant::Ant(const Ant & ex): maxTime (ex.maxTime), time(ex.time)  {
     currentPosition =ex.currentPosition;
     for (int i =0; i< N; i++)
         visited[i] = ex.visited[i];
+
+    ptr_to_graph = ex.ptr_to_graph;
 }
 
 Ant& Ant::operator=(const Ant& ex){
@@ -44,6 +48,7 @@ Ant& Ant::operator=(const Ant& ex){
     maxTime = move(ex.maxTime);
     time = move(ex.time);
     currentPosition = move(ex.currentPosition);
+    ptr_to_graph = ex.ptr_to_graph;
     return *this;
 
 }
@@ -79,6 +84,17 @@ Ant& Ant::operator=(const Ant& ex){
 
 
 void Ant::nextMove(){
+    vector<int> allConnections = ptr_to_graph->getConnections(currentPosition);
+    //ostream_iterator<int> out(cout, " ");
+    //copy(allConnections.begin(), allConnections.end(), out);
+
+
+//...
+    vector<int> wayPropabilities;
+    //for(auto i: allConnections)
+    //    wayPropabilities[i] = getWayPropability(i);
+
+
     return ;
 }
 Node Ant::getPosition(){

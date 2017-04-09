@@ -5,8 +5,7 @@
 #ifndef ANT2_ANT_H
 #define ANT2_ANT_H
 
-
-#define SETWVALUE 9
+#define SETWVALUE 5
 
 #include <iostream>
 #include <string>
@@ -26,9 +25,10 @@ public:
     //unique_ptr<bool[]> visited;
     //bool *visited ;//= nullptr;
     Node currentPosition;
+    shared_ptr<Graph> ptr_to_graph;
 
     //Ant();
-    Ant(int t, string start);
+    Ant(int t, int start, shared_ptr<Graph> ptr);
     Ant(const Ant & ex);
     Ant& operator=(Ant const& ex);
 

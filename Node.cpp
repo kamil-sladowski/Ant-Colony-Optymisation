@@ -13,13 +13,16 @@ using namespace std;
 //extern int N;
 
 Node::Node() {
-    name = "No name";
+    number = -1;
+    name = "no name";
 }
 
-Node::Node(string name){
-    this->name = name;
+Node::Node(int number){
+    this->number = number;
 }
 
+
+/*
 Node::Node(Node & ex){
     name = ex.name;
 }
@@ -31,7 +34,6 @@ Node& Node::operator=(Node const& ex){
     name = move(ex.name);
     return *this;
 }
+*/
 
-vector<int> Node::getConnections(){
 
-}

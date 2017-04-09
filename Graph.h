@@ -5,9 +5,10 @@
 #include <utility>
 #include <string>
 #include <vector>
+#include "Node.h"
 #ifndef ANT2_GRAPH_H
 #define ANT2_GRAPH_H
-#define SETWVALUE 9
+#define SETWVALUE 5
 
 using namespace std;
 
@@ -22,7 +23,7 @@ public:
     void evaporateFermons();
     void leaveFermon(pair<int, int>);
     void showAdjacencyGraph();
-
+    vector<int> getConnections(Node currentPosition);
 };
 
 
