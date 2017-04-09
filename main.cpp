@@ -24,7 +24,6 @@ int main() {
     //::N = nodeNumber;
     cout<< "creation graph " << endl;
     Graph graph1;
-    graph1.showAdjacencyGraph();
     auto ptr_to_graph = make_shared<Graph>(graph1);
 
 

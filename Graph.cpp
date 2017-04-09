@@ -20,7 +20,6 @@ Graph::Graph(){
     initializeAdjacencyGraph(adjacencyGraph);
     for (int i = 0; i < N; ++i)
         adjacencyGraph[i][i] = 1;
-    showAdjacencyGraph();
     fermon = createMatrix();
 }
 /*
@@ -86,4 +85,11 @@ vector<int> Graph::getConnections(Node currentPosition){
             connections.push_back(i);
 
     return connections;
+}
+
+float Graph::getFermon(pair<int, int> coordinates){
+    return fermon[coordinates.first][coordinates.second];
+}
+int Graph::getWayLength(pair<int, int> coordinates){
+    return adjacencyGraph[coordinates.first][coordinates.second];
 }

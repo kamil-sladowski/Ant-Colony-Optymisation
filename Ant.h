@@ -38,7 +38,7 @@ public:
     int getNextDirection( vector<int> allConnections);
 };
 
-float getWayPropability(int i);
+//pair<int, double> getWayPropability(int i, vector<int> connections, int position);
 void chooseWay();
 void move();
 void looseFermon();

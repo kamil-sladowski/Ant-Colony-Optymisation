@@ -90,9 +90,26 @@ void Ant::nextMove(){
 
 
 //...
-    vector<int> wayPropabilities;
-    //for(auto i: allConnections)
-    //    wayPropabilities[i] = getWayPropability(i);
+/*
+    double sum =0;
+    int position = currentPosition.number;
+    int ways = allConnections.size();
+    vector<pair<int, double>> wayPropabilities;
+    int i=0;
+    double temp[ways];
+    for(int x: allConnections){
+        cout<< " = "<<x<<endl;
+        temp[i] = ptr_to_graph->getFermon(make_pair<int, int>(x, position)) *(1/ptr_to_graph->getWayLength(make_pair<int, int>(x, position))); //+power
+        sum += temp[i];
+        i++;
+    }
+    i=0;
+    for(int x: allConnections){
+        wayPropabilities[i] = make_pair<int, double>(x, temp[i]/sum);
+    }
+
+*/
+    //    wayPropabilities[i] = getWayPropability(i, allConnections, currentPosition.number);
 
 
     return ;
@@ -107,4 +124,11 @@ int Ant::getNextDirection(vector<int> allConnections){
     return direction;
 }
 
-//int propability()
+/*
+pair<int, double> Ant::getWayPropability(int i, vector<int> connections, int position){
+int ways = connections.size();
+for(int x : connections)
+    cout<< " = "<<x<<endl;
+
+    return make_pair<int, double>(0, 0);
+}*/

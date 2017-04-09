@@ -24,6 +24,8 @@ public:
     void leaveFermon(pair<int, int>);
     void showAdjacencyGraph();
     vector<int> getConnections(Node currentPosition);
+    float getFermon(pair<int, int>);
+    int getWayLength(pair<int, int>);
 };
 
 
