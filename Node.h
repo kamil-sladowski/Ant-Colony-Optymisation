@@ -4,7 +4,6 @@
 
 #ifndef ANT2_NODE_H
 #define ANT2_NODE_H
-#define SETWVALUE 5
 
 #include <string>
 #include <iostream>

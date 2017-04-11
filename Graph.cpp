@@ -9,7 +9,8 @@
 #include <vector>
 #include "Graph.h"
 
-#define N 6
+#define SETVALUE 5
+#define N 4
 using namespace std;
 
 //extern int N;
@@ -17,7 +18,7 @@ using namespace std;
 
 Graph::Graph(float speed){
     evaporationSpeed = speed;
-    adjacencyGraph = createMatrix(0);//-1
+    adjacencyGraph = createMatrix(-1);
     initializeAdjacencyGraph(adjacencyGraph);
     for (int i = 0; i < N; ++i)
         adjacencyGraph[i][i] = 1;

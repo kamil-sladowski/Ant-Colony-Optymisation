@@ -5,14 +5,13 @@
 #ifndef ANT2_ANT_H
 #define ANT2_ANT_H
 
-#define SETWVALUE 5
 
 #include <iostream>
 #include <string>
 #include <vector>
 #include "Node.h"
 #include "Graph.h"
-#define N 6
+#define N 4
 using namespace std;
 
 //extern int N;
@@ -37,11 +36,14 @@ public:
     Node getPosition();
     void moveToNextNode(int next);
     void looseFermon();
-    vector<char> getPath();
+    void getPath();
 };
 
 int chooseWay(vector<pair<int, double>> wayPropabilities);
+
+
 float getRandom();
+
 
 
 

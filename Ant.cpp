@@ -12,7 +12,7 @@
 #include <iterator>
 #include <random>
 #include "Ant.h"
-#define N 6
+#define N 4
 
 using namespace std;
 
@@ -32,9 +32,8 @@ Ant::Ant(const Ant & ex): maxTime (ex.maxTime), time(ex.time), visited(N,false),
     //copy(ex.visitedNodes.begin(), ex.visitedNodes.end(), visitedNodes);
     for (int i =0; i< N; i++)
         visited[i] = ex.visited[i];
-cout <<"aaa"<<endl;
+
     visitedNodes.push_back(ex.visitedNodes[0]);
-    cout <<"bbb"<<endl;
     ptr_to_graph = ex.ptr_to_graph;
 }
 
@@ -125,7 +124,6 @@ Node Ant::getPosition(){
 
 int chooseWay(vector<pair<int, double>> wayPropabilities) {
     float randomResult = getRandom();
-    //cout<< "los "<< randomResult<<endl;
     float k = 0;
     int i = 0;
 
@@ -143,15 +141,14 @@ void Ant::moveToNextNode(int next){
     ptr_to_graph->leaveFermon(make_pair(next, currentPosition.number));
     currentPosition = Node(next);
     visitedNodes.push_back(currentPosition.name);
-    //cout << "visited node: "<< currentPosition.name<<endl;
 
     visited[next] = true;
 }
 
-vector<char> Ant::getPath() {
+void Ant::getPath() {
     //ostream_iterator<char> out(cout, " -> ");
     //copy(visitedNodes.begin(), visitedNodes.end(), out);
-    cout<< "size nodev " << visitedNodes.size()<<endl;
+
     for (char i : visitedNodes)
         cout << i << " ->";
 
