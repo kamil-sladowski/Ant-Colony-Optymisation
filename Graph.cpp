@@ -15,12 +15,13 @@ using namespace std;
 //extern int N;
 
 
-Graph::Graph(){
-    adjacencyGraph = createMatrix();
+Graph::Graph(float speed){
+    evaporationSpeed = speed;
+    adjacencyGraph = createMatrix(0);//-1
     initializeAdjacencyGraph(adjacencyGraph);
     for (int i = 0; i < N; ++i)
         adjacencyGraph[i][i] = 1;
-    fermon = createMatrix();
+    fermon = createMatrix<double>(1.0);
 }
 /*
 Graph& Graph::operator=(Graph const& ex){
@@ -30,21 +31,24 @@ Graph& Graph::operator=(Graph const& ex){
 void Graph::evaporateFermons(){
     for(int i = 0; i<N; i++)
         for(int j = 0; j<N; j++)
-            fermon[i][j] -=1;
+            fermon[i][j] = (1 - evaporationSpeed)*fermon[i][j]; // -1/L
 }
 
 void Graph::leaveFermon(pair<int, int>point){
+    fermon[point.second][point.first] +=1;
     fermon[point.first][point.second] +=1;
+    //cout<< point.second << " "<< point.first<< endl;
 }
 
-int **createMatrix() {
-    int **matrix = new int *[N]; //Tworzenie dynamicznej tablicy o wymiarach NxN
+template<typename T>
+T **createMatrix(T initializer) {
+    T **matrix = new T *[N]; //Tworzenie dynamicznej tablicy o wymiarach NxN
     for (int i = 0; i < N; ++i)
-        matrix[i] = new int[N];
+        matrix[i] = new T[N];
 
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
-            matrix[i][j] = 0; //-1
+            matrix[i][j] = initializer;
         }
     }
     return matrix;
@@ -56,7 +60,7 @@ void initializeAdjacencyGraph(int ** adjacencyGraph){ //for tests
     adjacencyGraph[0][2] = 17;// A-C
     adjacencyGraph[2][0] = 17; //C-A
     adjacencyGraph[1][2] = 2; //C-B
-    adjacencyGraph[2][1] = 2; //B-C
+    adjacencyGraph[2][1] = 20; //B-C
     adjacencyGraph[0][3] = 8; // B-D
     adjacencyGraph[3][0] = 8; // D-B
     adjacencyGraph[3][2] = 31; //D-C
@@ -75,21 +79,19 @@ void Graph::showAdjacencyGraph()
     cout << endl;
 }
 
-vector<int> Graph::getConnections(Node currentPosition){
+vector<int> Graph::getConnections(int x, vector<bool> visited){
     vector<int> connections;
-    //cout<< "curr pos " << currentPosition.number<<endl;
-    int x = currentPosition.number;
 
     for(int i =0; i<N; i++)
-        if(adjacencyGraph[x][i] > 1)
+        if(adjacencyGraph[x][i] > 1 && !visited[i])
             connections.push_back(i);
 
     return connections;
 }
 
-float Graph::getFermon(pair<int, int> coordinates){
-    return fermon[coordinates.first][coordinates.second];
+float Graph::getFermon(int x, int y){
+    return fermon[y][x];
 }
-int Graph::getWayLength(pair<int, int> coordinates){
-    return adjacencyGraph[coordinates.first][coordinates.second];
+int Graph::getWayLength(int x, int y){
+    return adjacencyGraph[y][x];
 }

@@ -16,26 +16,24 @@ using namespace std;
 //int N; // wymiar liczba wezlow
 
 
-
 int main() {
-
-    srand( time( NULL ) );
     //int nodeNumber = 6; //6 only now
     //::N = nodeNumber;
-    cout<< "creation graph " << endl;
-    Graph graph1;
-    auto ptr_to_graph = make_shared<Graph>(graph1);
-
-
+    float evaporationSpeed = 0.05;
+    shared_ptr<Graph> ptr_to_graph = make_shared<Graph>(evaporationSpeed);
     ptr_to_graph->showAdjacencyGraph();
-    cout<< "creation population: " << endl;
-    vector<Ant> population (ANTSPOPULATION, {Ant(N, 0, ptr_to_graph)});
-
-     population[1] = {Ant(N, 1, ptr_to_graph)};
-
-    population[1].nextMove();
-
-
+    //vector<Ant> population (ANTSPOPULATION, {Ant(N, 0, ptr_to_graph)});
+    vector<Ant> population;
+    for(int i = 0; i<ANTSPOPULATION; i++) {
+        population.push_back({Ant(N, 1, ptr_to_graph)});
+    }
+    for(int i = 0; i<ANTSPOPULATION; i++) {
+        for (int j = 0; j < N - 3; j++) {
+            population[i].nextMove();
+            ptr_to_graph->evaporateFermons();
+        }
+        population[0].getPath();
+    }
 
 
     return 0;

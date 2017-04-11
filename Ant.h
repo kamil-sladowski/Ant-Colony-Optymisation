@@ -21,10 +21,10 @@ class Ant{
 public:
     int time;
     int maxTime;
-    bool visited[N];
-    //unique_ptr<bool[]> visited;
-    //bool *visited ;//= nullptr;
+    vector<bool> visited;
+    int traveledDistance;
     Node currentPosition;
+    vector<char> visitedNodes;
     shared_ptr<Graph> ptr_to_graph;
 
     //Ant();
@@ -35,13 +35,14 @@ public:
 
     void nextMove();
     Node getPosition();
-    int getNextDirection( vector<int> allConnections);
+    void moveToNextNode(int next);
+    void looseFermon();
+    vector<char> getPath();
 };
 
-//pair<int, double> getWayPropability(int i, vector<int> connections, int position);
-void chooseWay();
-void move();
-void looseFermon();
+int chooseWay(vector<pair<int, double>> wayPropabilities);
+float getRandom();
+
 
 
 

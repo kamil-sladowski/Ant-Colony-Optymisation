@@ -13,23 +13,26 @@
 using namespace std;
 
 class Graph{
+private:
+    float evaporationSpeed;
+
 public:
     int ** adjacencyGraph;
-    int ** fermon;
+    double ** fermon;
 
-    Graph();
+    Graph(float);
     //Graph(Graph &);
 
     void evaporateFermons();
     void leaveFermon(pair<int, int>);
     void showAdjacencyGraph();
-    vector<int> getConnections(Node currentPosition);
-    float getFermon(pair<int, int>);
-    int getWayLength(pair<int, int>);
+    vector<int> getConnections(int currentPosition, vector<bool> visited);
+    float getFermon(int, int);
+    int getWayLength(int, int);
 };
 
-
-int **createMatrix();
+template<typename T>
+T **createMatrix(T initializer);
 void initializeAdjacencyGraph(int ** adjacencyGraph);
 
 

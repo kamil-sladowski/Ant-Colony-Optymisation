@@ -14,11 +14,12 @@ using namespace std;
 
 Node::Node() {
     number = -1;
-    name = "no name";
+    name = '#';
 }
 
 Node::Node(int number){
     this->number = number;
+    this->name = static_cast<char>('A' + number);
 }
 
 

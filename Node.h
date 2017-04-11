@@ -14,7 +14,7 @@ using namespace std;
 
 class Node {
 public:
-    string name;
+    char name;
     int number;
 
     Node();

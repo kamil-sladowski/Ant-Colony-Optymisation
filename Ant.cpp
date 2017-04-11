@@ -10,44 +10,46 @@
 #include <vector>
 #include<memory>
 #include <iterator>
+#include <random>
 #include "Ant.h"
 #define N 6
 
 using namespace std;
 
-Ant::Ant(int max, int start, shared_ptr<Graph> ptr){
+Ant::Ant(int max, int start, shared_ptr<Graph> ptr): visited(N,false){
     maxTime = max;
     time = 0;
     currentPosition = Node(start);
-    //visited = make_unique<bool []>(N);
-
-    for(int i =0; i<N;i++) {
-        visited[i] = false;
-    }
-    visited[0] = true;
-
+    visited[currentPosition.number] = true;
+    traveledDistance = 0;
+    visitedNodes.push_back(currentPosition.name);
     ptr_to_graph=ptr;
 
 }
 
-Ant::Ant(const Ant & ex): maxTime (ex.maxTime), time(ex.time)  {
-    currentPosition =ex.currentPosition;
+Ant::Ant(const Ant & ex): maxTime (ex.maxTime), time(ex.time), visited(N,false), traveledDistance(ex.traveledDistance)  {
+    currentPosition = ex.currentPosition;
+    //copy(ex.visitedNodes.begin(), ex.visitedNodes.end(), visitedNodes);
     for (int i =0; i< N; i++)
         visited[i] = ex.visited[i];
-
+cout <<"aaa"<<endl;
+    visitedNodes.push_back(ex.visitedNodes[0]);
+    cout <<"bbb"<<endl;
     ptr_to_graph = ex.ptr_to_graph;
 }
 
-Ant& Ant::operator=(const Ant& ex){
+Ant& Ant::operator=(const Ant& ex){ //nieuzywany
     if(this == &ex) return *this;
 
-    copy(ex.visited, ex.visited + sizeof(ex.visited)/sizeof(*ex.visited), visited);
-    //for (int i =0; i< N; i++)
-    //    visited[i] = ex.visited[i];
+    //copy(ex.visited.begin(), ex.visited.end(), visited);
+    visited.resize(N,false);
+    for (int i =0; i< N; i++)
+        visited[i] = ex.visited[i];
 
     maxTime = move(ex.maxTime);
     time = move(ex.time);
     currentPosition = move(ex.currentPosition);
+    traveledDistance = move(ex.traveledDistance);
     ptr_to_graph = ex.ptr_to_graph;
     return *this;
 
@@ -84,51 +86,81 @@ Ant& Ant::operator=(const Ant& ex){
 
 
 void Ant::nextMove(){
-    vector<int> allConnections = ptr_to_graph->getConnections(currentPosition);
-    //ostream_iterator<int> out(cout, " ");
-    //copy(allConnections.begin(), allConnections.end(), out);
+    vector<int> allConnections = ptr_to_graph->getConnections(currentPosition.number, visited);
 
-
-//...
-/*
-    double sum =0;
-    int position = currentPosition.number;
     int ways = allConnections.size();
-    vector<pair<int, double>> wayPropabilities;
-    int i=0;
-    double temp[ways];
-    for(int x: allConnections){
-        cout<< " = "<<x<<endl;
-        temp[i] = ptr_to_graph->getFermon(make_pair<int, int>(x, position)) *(1/ptr_to_graph->getWayLength(make_pair<int, int>(x, position))); //+power
-        sum += temp[i];
-        i++;
+    if(ways >0){
+            double sum = 0;
+            int position = currentPosition.number;
+            int i =0, nextWay= 0;
+            double temp[ways];
+            vector<pair<int, double>> wayPropabilities;
+            for (int x: allConnections) {
+                temp[i] = ptr_to_graph->getFermon(x, position) / (ptr_to_graph->getWayLength(x, position)); //+power
+                sum += temp[i];
+                i++;
+            }
+            i = 0;
+
+            for (int x: allConnections) {
+                wayPropabilities.push_back(make_pair<int, double>((int) x, (double) temp[i] / sum));
+                //cout << " way to: " << wayPropabilities[i].first << " propability: " << wayPropabilities[i].second << endl;
+                i++;
+            }
+
+            nextWay = chooseWay(wayPropabilities);
+            //cout << " wybrana sciezka " << nextWay << endl;
+            moveToNextNode(nextWay);
     }
-    i=0;
-    for(int x: allConnections){
-        wayPropabilities[i] = make_pair<int, double>(x, temp[i]/sum);
-    }
+    else
+        cout<< "slepa uliczka"<<endl;
+    return;
 
-*/
-    //    wayPropabilities[i] = getWayPropability(i, allConnections, currentPosition.number);
-
-
-    return ;
 }
 Node Ant::getPosition(){
+    cout<< "current position " << currentPosition.number<< "  "<< currentPosition.name<<endl;
     return currentPosition;
 }
 
-int Ant::getNextDirection(vector<int> allConnections){
-    int direction = 0;
-    //losowanie
-    return direction;
+
+int chooseWay(vector<pair<int, double>> wayPropabilities) {
+    float randomResult = getRandom();
+    //cout<< "los "<< randomResult<<endl;
+    float k = 0;
+    int i = 0;
+
+    do {
+        k += wayPropabilities[i].second;
+        i++;
+    } while (k <= randomResult && i < wayPropabilities.size());
+
+     return wayPropabilities[i-1].first;
+     }
+
+void Ant::moveToNextNode(int next){
+    time++;
+    traveledDistance+= ptr_to_graph->getWayLength(next, currentPosition.number);
+    ptr_to_graph->leaveFermon(make_pair(next, currentPosition.number));
+    currentPosition = Node(next);
+    visitedNodes.push_back(currentPosition.name);
+    //cout << "visited node: "<< currentPosition.name<<endl;
+
+    visited[next] = true;
 }
 
-/*
-pair<int, double> Ant::getWayPropability(int i, vector<int> connections, int position){
-int ways = connections.size();
-for(int x : connections)
-    cout<< " = "<<x<<endl;
+vector<char> Ant::getPath() {
+    //ostream_iterator<char> out(cout, " -> ");
+    //copy(visitedNodes.begin(), visitedNodes.end(), out);
+    cout<< "size nodev " << visitedNodes.size()<<endl;
+    for (char i : visitedNodes)
+        cout << i << " ->";
 
-    return make_pair<int, double>(0, 0);
-}*/
+    cout << endl;
+}
+
+float getRandom(){
+    random_device rd;
+    mt19937 mt(rd());
+    uniform_real_distribution<float> dist(0.0, 1.0);
+    return dist(mt);
+}
