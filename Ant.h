@@ -11,7 +11,7 @@
 #include <vector>
 #include "Node.h"
 #include "Graph.h"
-#define N 4
+
 using namespace std;
 
 //extern int N;
@@ -40,13 +40,6 @@ public:
 };
 
 int chooseWay(vector<pair<int, double>> wayPropabilities);
-
-
 float getRandom();
-
-
-
-
-
 
 #endif //ANT2_ANT_H

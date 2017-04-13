@@ -7,7 +7,7 @@
 #include <utility>
 #include <string>
 #include<memory>
-#define N 4
+
 using namespace std;
 
 //extern int N;

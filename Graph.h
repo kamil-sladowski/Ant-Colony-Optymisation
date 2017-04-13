@@ -24,16 +24,17 @@ public:
     //Graph(Graph &);
 
     void evaporateFermons();
-    void leaveFermon(pair<int, int>);
+    void leaveFermon(pair<int, int>, int wayLength);
     void showAdjacencyGraph();
     vector<int> getConnections(int currentPosition, vector<bool> visited);
     float getFermon(int, int);
     int getWayLength(int, int);
+    void getAdjacencyGraphFromFile();
 };
 
 template<typename T>
 T **createMatrix(T initializer);
-void initializeAdjacencyGraph(int ** adjacencyGraph);
+
 
 
 #endif //ANT2_GRAPH_H

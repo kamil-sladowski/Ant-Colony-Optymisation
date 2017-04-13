@@ -12,7 +12,7 @@
 #include <iterator>
 #include <random>
 #include "Ant.h"
-#define N 4
+
 
 using namespace std;
 

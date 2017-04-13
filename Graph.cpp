@@ -10,16 +10,17 @@
 #include "Graph.h"
 
 #define SETVALUE 5
-#define N 4
+
 using namespace std;
 
-//extern int N;
+extern int N;
 
 
 Graph::Graph(float speed){
     evaporationSpeed = speed;
     adjacencyGraph = createMatrix(-1);
-    initializeAdjacencyGraph(adjacencyGraph);
+
+    getAdjacencyGraphFromFile();
     for (int i = 0; i < N; ++i)
         adjacencyGraph[i][i] = 1;
     fermon = createMatrix<double>(1.0);
@@ -35,15 +36,17 @@ void Graph::evaporateFermons(){
             fermon[i][j] = (1 - evaporationSpeed)*fermon[i][j]; // -1/L
 }
 
-void Graph::leaveFermon(pair<int, int>point){
-    fermon[point.second][point.first] +=1;
-    fermon[point.first][point.second] +=1;
-    //cout<< point.second << " "<< point.first<< endl;
+void Graph::leaveFermon(pair<int, int>point, int wayLength){
+    if (wayLength >0) {
+        fermon[point.second][point.first] +=1/wayLength;
+        fermon[point.first][point.second] +=1/wayLength;
+    } else {
+    }
 }
 
 template<typename T>
 T **createMatrix(T initializer) {
-    T **matrix = new T *[N]; //Tworzenie dynamicznej tablicy o wymiarach NxN
+    T **matrix = new T *[N];
     for (int i = 0; i < N; ++i)
         matrix[i] = new T[N];
 
@@ -95,4 +98,15 @@ float Graph::getFermon(int x, int y){
 }
 int Graph::getWayLength(int x, int y){
     return adjacencyGraph[y][x];
+}
+
+
+void Graph::getAdjacencyGraphFromFile(){
+    int a = 0;
+    for(int j = 0; j<N; j++) {
+        for(int i = 0; i<N; i++) {
+            cin>>a;
+            adjacencyGraph[j][i] = a;
+        }
+    }
 }
