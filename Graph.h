@@ -8,26 +8,29 @@
 #include "Node.h"
 #ifndef ANT2_GRAPH_H
 #define ANT2_GRAPH_H
-#define SETWVALUE 5
+#define SETWVALUE 8
 
 using namespace std;
 
 class Graph{
 private:
-    float evaporationSpeed;
+    double evaporationSpeed;
 
 public:
     int ** adjacencyGraph;
     double ** fermon;
 
-    Graph(float);
+    Graph(double);
     //Graph(Graph &);
 
-    void evaporateFermons();
-    void leaveFermon(pair<int, int>, int wayLength);
-    void showAdjacencyGraph();
-    vector<int> getConnections(int currentPosition, vector<bool> visited);
+    int ** getAdjacencyGraph();
+    double ** getFermons();
     float getFermon(int, int);
+    void evaporateFermons();
+    void leaveFermon(vector<pair<int, int>>points, double wayLength);
+    template <typename T>
+    void showMatrix(T** matrix);
+    vector<int> getConnections(int currentPosition, vector<bool> visited);
     int getWayLength(int, int);
     void getAdjacencyGraphFromFile();
 };

@@ -9,26 +9,38 @@
 #include <vector>
 #include "Graph.h"
 
-#define SETVALUE 5
-
 using namespace std;
 
 extern int N;
 
 
-Graph::Graph(float speed){
+Graph::Graph(double speed){
     evaporationSpeed = speed;
-    adjacencyGraph = createMatrix(-1);
 
+    adjacencyGraph = createMatrix(-1);
     getAdjacencyGraphFromFile();
     for (int i = 0; i < N; ++i)
         adjacencyGraph[i][i] = 1;
-    fermon = createMatrix<double>(1.0);
+    fermon = createMatrix<double>(0.1);
+    cout << fermon[1][1]<<endl;
 }
 /*
 Graph& Graph::operator=(Graph const& ex){
 }
 */
+
+int ** Graph::getAdjacencyGraph(){
+    return adjacencyGraph;
+}
+
+double ** Graph::getFermons(){
+    return fermon;
+}
+
+
+float Graph::getFermon(int x, int y){
+    return fermon[y][x];
+}
 
 void Graph::evaporateFermons(){
     for(int i = 0; i<N; i++)
@@ -36,11 +48,12 @@ void Graph::evaporateFermons(){
             fermon[i][j] = (1 - evaporationSpeed)*fermon[i][j]; // -1/L
 }
 
-void Graph::leaveFermon(pair<int, int>point, int wayLength){
+void Graph::leaveFermon(vector<pair<int, int>>points, double wayLength){
     if (wayLength >0) {
-        fermon[point.second][point.first] +=1/wayLength;
-        fermon[point.first][point.second] +=1/wayLength;
-    } else {
+        for(auto point : points){
+            fermon[point.second][point.first] +=1/wayLength*10;
+            fermon[point.first][point.second] +=1/wayLength*10;
+        }
     }
 }
 
@@ -71,12 +84,13 @@ void initializeAdjacencyGraph(int ** adjacencyGraph){ //for tests
     adjacencyGraph[2][3] = 31; //C-D
 }
 
-void Graph::showAdjacencyGraph()
+template <typename T>
+void Graph::showMatrix(T ** matrix)
 {
     cout << setw(SETWVALUE);
     for(int j = 0; j<N; j++) {
         for(int i = 0; i<N; i++) {
-            cout << adjacencyGraph[i][j]<<setw(SETWVALUE);
+            cout << fixed<< setprecision(4)<< matrix[i][j]<<setw(SETWVALUE);
         }
         cout << endl;
     }
@@ -93,9 +107,7 @@ vector<int> Graph::getConnections(int x, vector<bool> visited){
     return connections;
 }
 
-float Graph::getFermon(int x, int y){
-    return fermon[y][x];
-}
+
 int Graph::getWayLength(int x, int y){
     return adjacencyGraph[y][x];
 }

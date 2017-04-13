@@ -1,13 +1,10 @@
-//
-// Created by Kamil on 2017-04-09.
-//
-
 #ifndef ANT2_ANT_H
 #define ANT2_ANT_H
 
 
 #include <iostream>
 #include <string>
+#include <utility>
 #include <vector>
 #include "Node.h"
 #include "Graph.h"
@@ -20,14 +17,15 @@ class Ant{
 public:
     int time;
     int maxTime;
+    double lengthProportion;
     vector<bool> visited;
     int traveledDistance;
     Node currentPosition;
-    vector<char> visitedNodes;
+    vector<pair<int, int>> visitedNodes;
     shared_ptr<Graph> ptr_to_graph;
 
     //Ant();
-    Ant(int t, int start, shared_ptr<Graph> ptr);
+    Ant(int t, int start, double lengthProportion, shared_ptr<Graph> ptr);
     Ant(const Ant & ex);
     Ant& operator=(Ant const& ex);
 
@@ -36,6 +34,8 @@ public:
     Node getPosition();
     void moveToNextNode(int next);
     void looseFermon();
+    int getTraveledDistance();
+    vector<pair<int, int> > getVisitedNodes();
     void getPath();
 };
 
