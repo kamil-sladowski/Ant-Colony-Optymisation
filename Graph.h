@@ -1,6 +1,3 @@
-//
-// Created by Kamil on 2017-04-09.
-//
 #include <iostream>
 #include <utility>
 #include <string>
@@ -13,15 +10,11 @@
 using namespace std;
 
 class Graph{
-private:
     double evaporationSpeed;
-
-public:
     int ** adjacencyGraph;
     double ** fermon;
-
+public:
     Graph(double);
-    //Graph(Graph &);
 
     int ** getAdjacencyGraph();
     double ** getFermons();

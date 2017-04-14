@@ -1,7 +1,4 @@
 #include <iostream>
-#include <cstdlib>
-#include <utility>
-#include <string>
 #include <vector>
 #include <memory>
 #include <algorithm>
@@ -12,15 +9,17 @@
 
 using namespace std;
 
-int N; // wymiar liczba wezlow
+int N;
 int main() {
     int const ANTSPOPULATION = 200;
     int nodeNumber = 7;
-    cin >> nodeNumber;
     ::N = nodeNumber;
     srand( time( NULL ) );
     double evaporationSpeed = 0.4;
     double lengthProportion = 0.05;
+    cin >> nodeNumber;
+    cin >> evaporationSpeed;
+    cin >>lengthProportion;
     shared_ptr<Graph> ptr_to_graph = make_shared<Graph>(evaporationSpeed);
     ptr_to_graph->showMatrix(ptr_to_graph->getAdjacencyGraph());
     vector<Ant> population;
@@ -36,12 +35,10 @@ int main() {
         if (population[i].getVisitedNodes().size() >=N-1) {
             population[i].ptr_to_graph->leaveFermon(population[i].getVisitedNodes(), population[i].getTraveledDistance());
             population[i].getPath();
-            cout<< " traveled:  "<< population[i].getTraveledDistance()<<endl;
+            cout<< "Ant traveled:  "<< population[i].getTraveledDistance()<<endl;
         }
     }
-
-    ptr_to_graph->showMatrix(ptr_to_graph->fermon);
-
+    //ptr_to_graph->showMatrix(ptr_to_graph->getFermons());
 
     return 0;
 }

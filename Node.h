@@ -1,6 +1,3 @@
-//
-// Created by Kamil on 2017-04-09.
-//
 
 #ifndef ANT2_NODE_H
 #define ANT2_NODE_H
@@ -18,9 +15,6 @@ public:
 
     Node();
     Node(int number);
-    // Node(Node & ex);
-    //Node& operator= (Node const& ex);
 };
-
 
 #endif //ANT2_NODE_H

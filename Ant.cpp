@@ -1,7 +1,3 @@
-//
-// Created by Kamil on 2017-04-09.
-//
-
 #include <iostream>
 #include <cstdlib>
 #include <utility>
@@ -16,10 +12,10 @@
 
 using namespace std;
 
-Ant::Ant(int max, int start, double lengthProportion, shared_ptr<Graph> ptr): visited(N,false){
+Ant::Ant(int max, int start, double LEGTH_PROPORTION, shared_ptr<Graph> ptr): visited(N,false){
     maxTime = max;
     time = 0;
-    lengthProportion = lengthProportion;
+    LEGTH_PROPORTION = LEGTH_PROPORTION;
     currentPosition = Node(start);
     visited[currentPosition.number] = true;
     traveledDistance = 0;
@@ -28,60 +24,26 @@ Ant::Ant(int max, int start, double lengthProportion, shared_ptr<Graph> ptr): vi
 
 Ant::Ant(const Ant & ex): maxTime (ex.maxTime), time(ex.time), visited(N,false), traveledDistance(ex.traveledDistance)  {
     currentPosition = ex.currentPosition;
-    lengthProportion = ex.lengthProportion;
-    //copy(ex.visitedNodes.begin(), ex.visitedNodes.end(), visitedNodes);
     for (int i =0; i< N; i++)
         visited[i] = ex.visited[i];
 
-//    visitedNodes.push_back(ex.visitedNodes[0]);
     ptr_to_graph = ex.ptr_to_graph;
 }
 
-Ant& Ant::operator=(const Ant& ex){ //nieuzywany
+Ant& Ant::operator=(const Ant& ex){
     if(this == &ex) return *this;
 
-    //copy(ex.visited.begin(), ex.visited.end(), visited);
     visited.resize(N,false);
     for (int i =0; i< N; i++)
         visited[i] = ex.visited[i];
 
-    lengthProportion = ex.lengthProportion;
-    maxTime = move(ex.maxTime);
-    time = move(ex.time);
+    maxTime = ex.maxTime;
+    time = ex.time;
     currentPosition = move(ex.currentPosition);
-    traveledDistance = move(ex.traveledDistance);
+    traveledDistance = ex.traveledDistance;
     ptr_to_graph = ex.ptr_to_graph;
     return *this;
 }
-
-
-
-/*
-Ant::Ant(Ant & ex): maxTime (ex.maxTime), time(ex.time), currentPosition (ex.currentPosition),
-                visited(unique_ptr<bool[]>(ex.visited ? new bool(ex.visited) : nullptr)){ //*ex.visited
-    cout <<"c-cor cop"<<endl;
-    //visited.reset(new bool(*ex.visited));
-    //memcpy(visited, ex.visited, sizeof(bool)*N);
-}
-
-
-Ant& Ant::operator=(const Ant& ex){
-    if(this == &ex) return *this;
-    cout << "operator"<< endl;
-    try {
-        visited.reset(new bool[N]);
-        //visited.reset(new bool(ex.visited));//*ex.visited
-    }
-    catch(exception &e){
-        e.what();
-    }
-        cout << "next "<< endl;
-    maxTime = move(ex.maxTime);
-    time = move(ex.time);
-    currentPosition = move(ex.currentPosition);
-    return *this;
-}
-*/
 
 
 void Ant::nextMove(){
@@ -95,7 +57,7 @@ void Ant::nextMove(){
             vector<pair<int, double>> wayPropabilities;
 
             for (int x: allConnections) {
-                temp[i] = ptr_to_graph->getFermon(x, position) / pow(ptr_to_graph->getWayLength(x, position), lengthProportion); //+power
+                temp[i] = ptr_to_graph->getFermon(x, position) / pow(ptr_to_graph->getWayLength(x, position), LEGTH_PROPORTION); //+power
                 sum += temp[i];
                 i++;
             }
@@ -108,12 +70,11 @@ void Ant::nextMove(){
             }
 
             nextWay = chooseWay(wayPropabilities);
-            //cout << " wybrana sciezka " << nextWay << endl;
             moveToNextNode(nextWay);
     }
     else
       //  cout<< "slepa uliczka"<<endl;
-    return;
+        return;
 
 }
 Node Ant::getPosition(){
@@ -155,7 +116,6 @@ vector<pair<int, int>> Ant::getVisitedNodes(){
 
 void Ant::getPath() {
     if (!visitedNodes.empty()) {
-//        cout << visitedNodes[0].second;
         cout << static_cast<char>('A' +visitedNodes[0].second);
         for (pair<int, int> i : visitedNodes)
             cout << " -> "<< static_cast<char>('A' + i.first) ;

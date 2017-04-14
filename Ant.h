@@ -11,20 +11,17 @@
 
 using namespace std;
 
-//extern int N;
-
 class Ant{
-public:
     int time;
     int maxTime;
-    double lengthProportion;
+    double LEGTH_PROPORTION;
     vector<bool> visited;
-    int traveledDistance;
     Node currentPosition;
     vector<pair<int, int>> visitedNodes;
+public:
+    int traveledDistance;
     shared_ptr<Graph> ptr_to_graph;
 
-    //Ant();
     Ant(int t, int start, double lengthProportion, shared_ptr<Graph> ptr);
     Ant(const Ant & ex);
     Ant& operator=(Ant const& ex);
