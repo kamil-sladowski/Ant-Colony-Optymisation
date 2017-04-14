@@ -51,8 +51,8 @@ void Graph::evaporateFermons(){
 void Graph::leaveFermon(vector<pair<int, int>>points, double wayLength){
     if (wayLength >0) {
         for(auto point : points){
-            fermon[point.second][point.first] +=1/wayLength*10;
-            fermon[point.first][point.second] +=1/wayLength*10;
+            fermon[point.second][point.first] +=1/wayLength*100;
+            fermon[point.first][point.second] +=1/wayLength*100;
         }
     }
 }

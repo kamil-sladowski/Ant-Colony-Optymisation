@@ -112,7 +112,7 @@ void Ant::nextMove(){
             moveToNextNode(nextWay);
     }
     else
-        cout<< "slepa uliczka"<<endl;
+      //  cout<< "slepa uliczka"<<endl;
     return;
 
 }
@@ -155,9 +155,10 @@ vector<pair<int, int>> Ant::getVisitedNodes(){
 
 void Ant::getPath() {
     if (!visitedNodes.empty()) {
-        //cout << visitedNodes[0].first;
+//        cout << visitedNodes[0].second;
+        cout << static_cast<char>('A' +visitedNodes[0].second);
         for (pair<int, int> i : visitedNodes)
-            cout << " -> "<< static_cast<char>('A' + i.second) ;
+            cout << " -> "<< static_cast<char>('A' + i.first) ;
         cout << endl;
     }
 }
