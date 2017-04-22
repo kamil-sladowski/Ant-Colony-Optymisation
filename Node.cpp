@@ -1,12 +1,8 @@
-//
-// Created by Kamil on 2017-04-09.
-//
 
 #include "Node.h"
 #include <iostream>
 #include <utility>
 #include <string>
-#include<memory>
 
 using namespace std;
 
@@ -21,20 +17,4 @@ Node::Node(int number){
     this->number = number;
     this->name = static_cast<char>('A' + number);
 }
-
-
-/*
-Node::Node(Node & ex){
-    name = ex.name;
-}
-
-Node& Node::operator=(Node const& ex){
-    if(this == &ex)
-        return *this;
-
-    name = move(ex.name);
-    return *this;
-}
-*/
-
 
