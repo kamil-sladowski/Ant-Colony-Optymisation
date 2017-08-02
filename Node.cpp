@@ -4,10 +4,6 @@
 #include <utility>
 #include <string>
 
-using namespace std;
-
-//extern int N;
-
 Node::Node() {
     number = -1;
     name = '#';
