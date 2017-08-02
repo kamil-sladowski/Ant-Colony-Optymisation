@@ -19,6 +19,8 @@ class Ant{
     Node currentPosition;
     vector<pair<int, int>> visitedNodes;
 public:
+
+    Node startPosition;
     int traveledDistance;
     shared_ptr<Graph> ptr_to_graph;
 
@@ -34,6 +36,8 @@ public:
     int getTraveledDistance();
     vector<pair<int, int> > getVisitedNodes();
     void getPath();
+
+    void addDistanceToComeBack();
 };
 
 int chooseWay(vector<pair<int, double>> wayPropabilities);

@@ -17,12 +17,13 @@ Ant::Ant(int max, int start, double LEGTH_PROPORTION, shared_ptr<Graph> ptr): vi
     time = 0;
     LEGTH_PROPORTION = LEGTH_PROPORTION;
     currentPosition = Node(start);
+    startPosition = currentPosition;
     visited[currentPosition.number] = true;
     traveledDistance = 0;
     ptr_to_graph=ptr;
 }
 
-Ant::Ant(const Ant & ex): maxTime (ex.maxTime), time(ex.time), visited(N,false), traveledDistance(ex.traveledDistance)  {
+Ant::Ant(const Ant & ex): maxTime (ex.maxTime), time(ex.time), visited(N,false), traveledDistance(ex.traveledDistance), startPosition(ex.startPosition)  {
     currentPosition = ex.currentPosition;
     for (int i =0; i< N; i++)
         visited[i] = ex.visited[i];
@@ -40,6 +41,7 @@ Ant& Ant::operator=(const Ant& ex){
     maxTime = ex.maxTime;
     time = ex.time;
     currentPosition = move(ex.currentPosition);
+    startPosition = move(ex.startPosition);
     traveledDistance = ex.traveledDistance;
     ptr_to_graph = ex.ptr_to_graph;
     return *this;
@@ -78,8 +80,14 @@ void Ant::nextMove(){
 
 }
 Node Ant::getPosition(){
-    cout<< "current position " << currentPosition.number<< "  "<< currentPosition.name<<endl;
+    //cout<< "current position " << currentPosition.number<< "  "<< currentPosition.name<<endl;
     return currentPosition;
+}
+
+
+void Ant::addDistanceToComeBack(){
+    traveledDistance += ptr_to_graph->getWayLength(startPosition.number, currentPosition.number);
+    visitedNodes.push_back(make_pair(currentPosition.number, startPosition.number));
 }
 
 

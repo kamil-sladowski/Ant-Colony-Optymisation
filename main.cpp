@@ -7,6 +7,17 @@
 #include "Ant.cpp"
 
 
+/*
+parowanie fermonu 0.01
+sila fermonu 2
+ waga f = 1
+
+E -> A -> B -> F -> G -> D -> C
+D -> A -> E -> C -> G -> B -> F -> F
+
+ */
+
+
 using namespace std;
 
 int N;
@@ -27,15 +38,18 @@ int main() {
     for(int i = 0; i<ANTSPOPULATION; i++) {
         population.push_back(Ant(N, rand()%N,lengthProportion, ptr_to_graph));
     }
+
+
     for(int i = 0; i<ANTSPOPULATION; i++) {
         for (int j = 0; j < N -1; j++) {
             population[i].nextMove();
-            ptr_to_graph->evaporateFermons();
         }
+        ptr_to_graph->evaporateFermons();
         if (population[i].getVisitedNodes().size() >=N-1) {
+            population[i].addDistanceToComeBack();
             population[i].ptr_to_graph->leaveFermon(population[i].getVisitedNodes(), population[i].getTraveledDistance());
             population[i].getPath();
-            cout<< "Ant traveled:  "<< population[i].getTraveledDistance()<<endl;
+            cout<< "Ant traveled:  "<< population[i].getTraveledDistance() <<endl;
         }
     }
     //ptr_to_graph->showMatrix(ptr_to_graph->getFermons());
