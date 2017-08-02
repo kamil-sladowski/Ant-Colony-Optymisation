@@ -4,8 +4,9 @@ Uruchomienie programu:
 make run
 
 
-Przyk³adowy plik "graph.txt" wejœciowy ma nastêpuj¹c¹ strukturê:
-[liczba wêz³ów] [szybkoœæ parowania] [waga d³ugoœci trasy]
+PrzykÅ‚adowy plik "graph.txt" wejÅ›ciowy ma nastÄ™pujÄ…cÄ… strukturÄ™:
+[liczba wÄ™zÅ‚Ã³w] [szybkoÅ›Ä‡ parowania] [waga dÅ‚ugoÅ›ci trasy]
+
 1 20 17 330 19 190 10
 20 1 20 -1 60 75 500
 17 20 1 31 15 33 7
@@ -14,6 +15,6 @@ Przyk³adowy plik "graph.txt" wejœciowy ma nastêpuj¹c¹ strukturê:
 19 75 33 2 880 1 10
 10 500 7 18 -1 10 1
 
-Wartoœci wspó³czynników ustawionych domyœlnie nie daj¹ idealnego rozwi¹zania.
+WartoÅ›ci wspÃ³Å‚czynnikÃ³w ustawionych domyÅ›lnie nie dajÄ… idealnego rozwiÄ…zania.
 
 
